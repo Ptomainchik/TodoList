@@ -28,7 +28,7 @@ export const AddItemForm = (props: AddItemFormType ) => {
    
    
    
-   return   <div>
+   return   <div className="task">
     <TextField size="small" variant="filled" color="success" value={title} onChange={onChangeHandler} 
     onKeyPress={onKeyPressHandler}
      className={error ? "error" : ""}

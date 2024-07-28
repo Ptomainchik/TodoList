@@ -3,12 +3,13 @@ import './App.css';
 import { TaskType, TodoList } from './components/TodoList/TodoList';
 import { v1 } from 'uuid';
 import { AddItemForm } from './components/AddItemForm/AddItemForm';
-
+import { AppBar, Box, Button, Container, Grid, IconButton, Toolbar, Typography } from '@mui/material';
+import { Menu } from '@mui/icons-material';
 
 
 export type FilterValuesType = "all" | "completed" | "active"
 
-type TodoListType = {
+export type TodoListType = {
   id: string
   title: string
   filter: FilterValuesType
@@ -110,7 +111,30 @@ let [tasksObj, setTasks] = useState<TaskStateType>({
   return (
    
     <div className="App">
-     <AddItemForm  addItem={addTodoList}/>
+   <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            TodoList
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+    </Box>
+     <Container fixed>
+      <Grid container>
+      <AddItemForm  addItem={addTodoList}/>
+      </Grid>
+      <Grid container spacing={3}>
       { 
       todoLists.map((tl) => {
        
@@ -123,7 +147,8 @@ let [tasksObj, setTasks] = useState<TaskStateType>({
           tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false)
         }
 
-      return <TodoList 
+      return <Grid item>
+        <TodoList 
                 key={tl.id}
                 id={tl.id}
                 tasks={tasksForTodolist} 
@@ -136,8 +161,10 @@ let [tasksObj, setTasks] = useState<TaskStateType>({
                 removeTodoList={removeTodoList}
                 changeTaskTitle={changeTaskTitle}
                 changeTodoListTitle={changeTodoListTitle}
-            />})}
-    </div>)
-
-      }
+            />
+            </Grid>
+            })}
+            </Grid>
+            </Container>
+    </div>)}
 export default App;
