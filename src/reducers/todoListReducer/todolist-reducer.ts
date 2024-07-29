@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { FilterValuesType, TodoListType } from "../App"
+import { FilterValuesType, TodoListType } from "../../App"
 
 export type RemoveTodoListActionType = {
   type:"REMOVE_TODOLIST"
@@ -9,6 +9,7 @@ export type RemoveTodoListActionType = {
 export type AddTodoListActionType = {
   type:"ADD_TODOLIST"
   title: string
+  todoListId: string
 }
 
 export type ChangeTodoListTitleActionType = {
@@ -32,7 +33,7 @@ export const todoListReducer = (state: Array<TodoListType>, action: ActionsType)
       }
       case "ADD_TODOLIST": {
         return [...state, { 
-            id: v1(),
+            id: action.todoListId,
             title: action.title,
             filter: "all" }]
            }
@@ -58,19 +59,19 @@ export const todoListReducer = (state: Array<TodoListType>, action: ActionsType)
     }
 }
 
-export const RemoveTodolistAC = (id: string): RemoveTodoListActionType => {
- return {type: "REMOVE_TODOLIST", id: id}
+export const removeTodolistAC = (todoListId: string): RemoveTodoListActionType => {
+ return {type: "REMOVE_TODOLIST", id: todoListId}
 }
 
-export const AddTodoListAC = (title: string): AddTodoListActionType => {
-  return {type: "ADD_TODOLIST", title: title}
+export const addTodoListAC = (title: string): AddTodoListActionType => {
+  return {type: "ADD_TODOLIST", title, todoListId: v1()}
 }
 
-export const ChangeTodoListTitleAC = (title: string, id: string): ChangeTodoListTitleActionType => {
-  return {type: "CHANGE_TODOLIST_TITLE", id: id, title: title }
+export const changeTodoListTitleAC = (title: string, todoListId: string): ChangeTodoListTitleActionType => {
+  return {type: "CHANGE_TODOLIST_TITLE",  title: title, id: todoListId}
 }
 
-export const ChangeTodoListFilterAC = (filter: FilterValuesType, id: string ): ChangeTodoListFilterActionType => {
-  return {type: "CHANGE_TODOLIST_FILTER", id: id, filter: filter}
+export const changeTodoListFilterAC = (filter: FilterValuesType, todoListId: string ): ChangeTodoListFilterActionType => {
+  return {type: "CHANGE_TODOLIST_FILTER", filter: filter, id: todoListId}
 
 }
