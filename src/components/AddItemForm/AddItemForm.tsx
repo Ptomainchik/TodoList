@@ -1,12 +1,12 @@
 import { Add } from "@mui/icons-material"
 import { Fab, TextField } from "@mui/material"
-import { ChangeEvent, KeyboardEvent, useState } from "react"
+import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 
 type AddItemFormType = {
     addItem: (title: string) => void
     }
 
-export const AddItemForm = (props: AddItemFormType ) => {
+export const AddItemForm = React.memo((props: AddItemFormType ) => {
     let [title, setTitle] = useState("")
     const [error, setError] = useState<string | null>(null )
    
@@ -14,7 +14,9 @@ export const AddItemForm = (props: AddItemFormType ) => {
         setTitle(e.currentTarget.value)
      }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-       setError(null)
+       if (error !== null) {
+        setError(null)
+       }
        if (e.charCode === 13) {
         addTask()
        }
@@ -39,4 +41,4 @@ export const AddItemForm = (props: AddItemFormType ) => {
 
    {error && <div className="error-message">{error}</div>}
 </div>
-}
+})
